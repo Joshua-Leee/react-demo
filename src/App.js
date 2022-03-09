@@ -12,7 +12,6 @@ import AuthRoute from './views/AuthRoute'
 
 const App = () => {
   const element = useRoutes(routes)
-  const { userStore } = useStore()
   const navigate = useNavigate()
   const userInfo = getSession('userInfo')
   const routeList = getSession('routeList')
