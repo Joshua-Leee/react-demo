@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+/*
+ * @Author: Joshua
+ * @Date: 2022-02-28 10:58:32
+ * @LastEditors: Joshua
+ * @LastEditTime: 2022-03-09 10:52:06
+ */
+import { useNavigate, useRoutes } from 'react-router-dom'
+import { observer, useStore } from './hooks/storeHooks'
+import { routes } from './routes'
+import { getSession } from './utils'
+import AuthRoute from './views/AuthRoute'
 
-function App() {
+const App = () => {
+  const element = useRoutes(routes)
+  const { userStore } = useStore()
+  const navigate = useNavigate()
+  const userInfo = getSession('userInfo')
+  const routeList = getSession('routeList')
+  console.log(userInfo)
+  console.log(routeList)
+
+  const handleSignOut = () => {
+    sessionStorage.removeItem('userInfo')
+    sessionStorage.removeItem('routeList')
+    navigate('/login')
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      {userInfo ? (
+        <button onClick={() => handleSignOut()}>退出当前账号</button>
+      ) : null}
+      <AuthRoute>{element}</AuthRoute>
+    </>
+  )
 }
 
-export default App;
+export default observer(App)
