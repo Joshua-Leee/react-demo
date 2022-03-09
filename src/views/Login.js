@@ -2,7 +2,7 @@
  * @Author: Joshua
  * @Date: 2022-03-07 14:22:50
  * @LastEditors: Joshua
- * @LastEditTime: 2022-03-09 10:52:25
+ * @LastEditTime: 2022-03-09 11:23:36
  */
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -17,7 +17,6 @@ const Login = () => {
   const navigate = useNavigate()
   const handleGetRouteList = () => {
     getRouteList().then(res => {
-      console.log(res)
       res = [...res, '/login', '/page404']
       sessionStorage.setItem('routeList', JSON.stringify(res))
       userStore.setRouteList(res)
@@ -28,14 +27,12 @@ const Login = () => {
   }
   const handleGetUserInfo = () => {
     getUserInfo().then(res => {
-      console.log(res)
       sessionStorage.setItem('userInfo', JSON.stringify(res))
       userStore.setUserInfo(res)
     })
   }
   const handleLogin = () => {
     login().then(res => {
-      console.log(res)
       handleGetRouteList()
       handleGetUserInfo()
     })
